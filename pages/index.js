@@ -1,63 +1,84 @@
-import Head from 'next/head'
+import * as React from "react";
+import Head from "next/head";
+
+export function useInput(validate) {
+  const [value, setValue] = React.useState("");
+  const [error, setError] = React.useState(false);
+  const [focus, setFocus] = React.useState(false);
+  const [dirty, setDirty] = React.useState(false);
+
+  const onChange = (e) => setValue(e.target.value);
+
+  const onBlur = () => (setDirty(true), setFocus(false));
+
+  const onFocus = () => setFocus(true);
+
+  React.useEffect(() => {
+    const shouldValidate = dirty && !focus && validate;
+    if (shouldValidate && !validate(value)) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }, [value, focus]);
+
+  return { value, onChange, onBlur, onFocus, error };
+}
 
 export default function Home() {
+  const name = useInput();
+  const phone = useInput((target) => {
+    let num = target.replace(/[^\d]/g, "");
+    return !(num.length < 8 || Number.isNaN(Number(num)));
+  });
+  const email = useInput((target) => {
+    let regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(target);
+  });
+
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Plataforma 5 - Coding Bootcamp</title>
+        <link rel="icon" href="/favicon.png" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+          rel="stylesheet"
+        ></link>
       </Head>
 
       <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className="title">Aprovechá la cuarentena y aprende a programar</h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          Dejanos tus datos y te confirmamos tu lugar por mail. La clase será
+          dada en la plataforma <strong>ZOOM</strong>.
         </p>
 
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <form>
+          <div className="inputContainer">
+            <div className="inputBlock">
+              <input placeholder="NOMBRE" {...name} />
+            </div>
+          </div>
+          <div className="inputContainer">
+            <div className="inputBlock">
+              {email.error && <p className="error">Ingresá un email válido</p>}
+              <input placeholder="EMAIL" {...email} />
+            </div>
+            <div className="inputBlock">
+              {phone.error && (
+                <p className="error">Ingresá un teléfono válido</p>
+              )}
+              <input placeholder="TELÉFONO (cod. área) 1111-1111" {...phone} />
+            </div>
+          </div>
+          <div>
+            <textarea placeholder="¿En qué clase querés participar? HTML (no necesitás conocimientos previos) o CSS (necesitas saber HTML)." />
+          </div>
+          <button>ENVIAR</button>
+        </form>
       </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
 
       <style jsx>{`
         .container {
@@ -70,29 +91,10 @@ export default function Home() {
         }
 
         main {
-          padding: 5rem 0;
+          padding: 1rem 3rem;
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
           justify-content: center;
           align-items: center;
         }
@@ -102,21 +104,10 @@ export default function Home() {
           text-decoration: none;
         }
 
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
         .title {
           margin: 0;
           line-height: 1.15;
-          font-size: 4rem;
+          font-size: 2rem;
         }
 
         .title,
@@ -125,67 +116,106 @@ export default function Home() {
         }
 
         .description {
+          width: 50%;
           line-height: 1.5;
-          font-size: 1.5rem;
+          font-size: 1.2rem;
         }
 
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+        form {
+          width: 100%;
+          padding: 0 5rem;
         }
 
-        .grid {
+        .inputContainer {
           display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
         }
 
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
+        .inputBlock {
+          position: relative;
+          width: 100%;
+          margin: 5px;
+          border-bottom: solid 1px #62d0ff;
         }
 
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
+        .inputBlock input {
+          border: none;
+          padding-left: 3px;
+          height: 35px;
+          font-size: 0.8rem;
+          width: 100%;
         }
 
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
+        input::-webkit-input-placeholder {
+          text-transform: uppercase;
         }
 
-        .card p {
+        textarea {
+          width: 100%;
+          height: 109px;
+          border: 1px solid #62d0ff;
+          box-sizing: border-box;
+          border-radius: 8px;
+          padding: 16px;
+          margin-bottom: 36px;
+          margin: 5px;
+          font-size: 0.8rem;
+        }
+
+        textarea::placeholder {
+          font-size: 0.8rem;
+          line-height: 16px;
+          letter-spacing: 0.04em;
+          color: #000829;
+          opacity: 0.6;
+        }
+
+        .error {
           margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
+          color: #ff062f;
+          position: absolute;
+          z-index: 10;
+          font-size: 0.8rem;
+          bottom: 9px;
+          right: 3px;
         }
 
-        .logo {
-          height: 1em;
+        button {
+          float: right;
+          margin: 0 auto;
+          width: 240px;
+          height: 48px;
+          background: #ff062e;
+          color: #fff;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 16px;
+          text-align: center;
+          letter-spacing: 0.04em;
+          outline: none;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          margin-top: 35px;
         }
 
         @media (max-width: 600px) {
-          .grid {
+          main {
+            padding: 1rem;
+          }
+          .description {
             width: 100%;
+          }
+          form {
+            width: 100%;
+            padding: 0;
+          }
+          .inputContainer {
             flex-direction: column;
+          }
+
+          button {
+            float: none;
+            width: 100%;
           }
         }
       `}</style>
@@ -195,9 +225,7 @@ export default function Home() {
         body {
           padding: 0;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+          font-family: "Montserrat", sans-serif;
         }
 
         * {
@@ -205,5 +233,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
