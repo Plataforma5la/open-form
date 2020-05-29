@@ -1,0 +1,169 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  background-color: #0f2649;
+  width: 100%;
+  padding: 0 2rem;
+}
+header img {
+  width: 15rem;
+}
+
+main {
+  padding: 1rem 3rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 2rem;
+  color: #000829;
+}
+
+.title,
+.description {
+  text-align: center;
+}
+
+.description {
+  width: 50%;
+  line-height: 1.5;
+  font-size: 1.2rem;
+}
+
+form {
+  width: 100%;
+  padding: 0 5rem;
+}
+
+.input-container {
+  display: flex;
+}
+
+.input-block {
+  position: relative;
+  width: 100%;
+  margin: 5px;
+  border-bottom: solid 1px #62d0ff;
+}
+
+.input-block input {
+  border: none;
+  padding-left: 3px;
+  height: 35px;
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+input::-webkit-input-placeholder {
+  text-transform: uppercase;
+}
+
+textarea {
+  width: 100%;
+  height: 109px;
+  border: 1px solid #62d0ff;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 36px;
+  margin: 5px;
+  font-size: 0.8rem;
+}
+
+textarea::placeholder {
+  font-size: 0.8rem;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: #000829;
+  opacity: 0.6;
+}
+
+.error {
+  margin: 0;
+  color: #ff062f;
+  position: absolute;
+  z-index: 10;
+  font-size: 0.8rem;
+  bottom: 9px;
+  right: 3px;
+}
+
+.success {
+  color: #0f2649;
+}
+
+button {
+  float: right;
+  margin: 0 auto;
+  width: 240px;
+  height: 48px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  margin-top: 35px;
+}
+
+button.active {
+  cursor: pointer;
+  background: #ff062e;
+}
+
+button.disabled {
+  cursor: not-allowed;
+  background: #8f8d8e;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 1rem;
+  }
+  .description {
+    width: 100%;
+  }
+  form {
+    width: 100%;
+    padding: 0;
+  }
+  .input-container {
+    flex-direction: column;
+  }
+
+  button {
+    float: none;
+    width: 100%;
+  }
+}
