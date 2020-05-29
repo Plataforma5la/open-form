@@ -118,6 +118,7 @@ textarea::placeholder {
 
 .success {
   color: #0f2649;
+  font-size: 1.2rem;
 }
 
 button {

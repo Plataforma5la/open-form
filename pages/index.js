@@ -8,9 +8,9 @@ import validators from "../utils/validators";
 export default function Home() {
   const [success, setSuccess] = React.useState(false);
   const [course, setCourse] = React.useState("");
-  const [nameError, name] = useInput();
-  const [phoneError, phone] = useInput(validators.phone);
-  const [emailError, email] = useInput(validators.email);
+  const [nameError, name, resetName] = useInput();
+  const [phoneError, phone, resetPhone] = useInput(validators.phone);
+  const [emailError, email, resetEmail] = useInput(validators.email);
 
   const send = (e) => {
     e.preventDefault();
@@ -20,6 +20,10 @@ export default function Home() {
       email: email.value,
       course,
     }).then(() => {
+      setCourse("");
+      resetEmail();
+      resetName();
+      resetPhone();
       setSuccess(true);
     });
   };
@@ -78,7 +82,10 @@ export default function Home() {
             />
           </div>
           {success ? (
-            <p className="success">Mail enviado!</p>
+            <p className="success">
+              ¡Muchas gracias por anotarte! Cualquier duda, escribinos a
+              admisiones@plataforma5.la
+            </p>
           ) : (
             <button
               disabled={disabled}

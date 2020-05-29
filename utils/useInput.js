@@ -21,5 +21,12 @@ export function useInput(validate) {
     }
   }, [value, focus]);
 
-  return [error, { value, onChange, onBlur, onFocus }];
+  const reset = () => {
+    setError(false);
+    setDirty(false);
+    setFocus(false);
+    setValue("");
+  };
+
+  return [error, { value, onChange, onBlur, onFocus }, reset];
 }
