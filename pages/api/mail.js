@@ -28,7 +28,7 @@ export default (req, res) => {
   };
 
   mailgun.messages().send(data, (error, body) => {
-    if (error) res.send({ status: "error" });
+    if (error) res.send({ status: "error", msg: error });
     else res.send({ status: "success" });
   });
 };
