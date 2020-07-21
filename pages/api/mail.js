@@ -13,12 +13,12 @@ export default (req, res) => {
     res.status(404).send();
   }
 
-  const { email, name, phone, course } = req.body;
+  const { email, name, phone, country } = req.body;
   const html = template
     .replace("{{name}}", name)
     .replace("{{email}}", email)
     .replace("{{phone}}", phone)
-    .replace("{{course}}", course);
+    .replace("{{country}}", country);
 
   const data = {
     from: "Plataforma 5 <admisiones@plataforma5.la>",

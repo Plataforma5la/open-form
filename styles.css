@@ -53,7 +53,7 @@ a {
 }
 
 .description {
-  width: 50%;
+  width: 500px;
   line-height: 1.5;
   font-size: 1.2rem;
 }
@@ -153,7 +153,7 @@ button.disabled {
     padding: 1rem;
   }
   .description {
-    width: 100%;
+    width: 95%;
   }
   form {
     width: 100%;

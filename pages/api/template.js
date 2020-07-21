@@ -294,7 +294,7 @@ export default `<!DOCTYPE html>
               padding-right: 15px;
             "
           >
-            Comentario:
+            Pais:
           </td>
           <td
             bgcolor="#ffffff"
@@ -307,11 +307,11 @@ export default `<!DOCTYPE html>
               padding-right: 15px;
             "
           >
-            {{course}}
+            {{country}}
           </td>
         </tr>
       </tbody>
     </table>
   </body>
 </html>
-`
+`;

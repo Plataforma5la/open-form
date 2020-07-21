@@ -7,4 +7,7 @@ export default {
     let num = target.replace(/[^\d]/g, "");
     return !(num.length < 8 || Number.isNaN(Number(num)));
   },
+  country: (target) => {
+    return target.length > 0;
+  },
 };
