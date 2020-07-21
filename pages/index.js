@@ -54,7 +54,7 @@ export default function Home() {
       </header>
       <main>
         <h1 className="title">
-          ¡Aprovechá la cuarentena y aprendé las bases de desarrollo web!
+          ¡Aprovechá la cuarentena y aprendé a diseñar un sitio web!
         </h1>
 
         <p className="description">
