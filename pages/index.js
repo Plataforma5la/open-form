@@ -90,7 +90,7 @@ export default function Home() {
               {countryError && (
                 <p className="error">Este campo no puede estar vacío</p>
               )}
-              <input placeholder="¿De que país nos escribes?" {...country} />
+              <input placeholder="¿De qué país nos escribís?" {...country} />
             </div>
           </div>
 
